@@ -20,6 +20,6 @@ driver.manage().window().maximize();
     // await driver.actions().keyDown(Key.CONTROL).sendKeys('a').perform();
   }
   finally {
-    // await driver.quit();
+    await driver.quit();
   }
 })();

@@ -82,15 +82,14 @@ async function testList() {
         }, 2000);
       }, 3000);
     }, 10000);
-
   } catch (err) {
     console.error("Something went wrong!\n", err.stack, "\n");
   }
 }
 
-async function testProfile() {
+async function testProfileTab1() {
   try {
-    // await testLogin();
+    await testLogin();
 
     setTimeout(async () => {
       await driver.get(url + "profile");
@@ -115,22 +114,51 @@ async function testProfile() {
                 "/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[1]/div/div/div/div/div/div/div/div[2]/input"
               )
             )
-            .sendKeys(inputValue, "1124");
-          await driver
-            .findElement(
-              By.xpath(
-                "/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[2]/button[2]"
-              )
-            )
-            .click();
+            .sendKeys(inputValue, 1124);
+          await driver.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[2]/button[2]")).click();
+          
         }, 3000);
       }, 5000);
     }, 10000);
+    
   } catch (err) {
     console.error("Something went wrong!\n", err.stack, "\n");
   }
 }
 
-testList();
+async function testProfileTab2(){
+  try {
 
-testProfile();
+    await testLogin();
+    setTimeout( async() =>{
+      await driver.get(url + "profile");
+
+    await driver.findElement(By.xpath("//*[@id='rc-tabs-0-tab-2']")).click()
+
+    setTimeout( async() =>{
+      await driver.findElement(By.xpath("//*[@id='basic']/div[1]/div[2]/div/div/div/div[2]/input")).sendKeys(1235)
+      setTimeout( async() =>{
+        await driver.findElement(By.xpath("//*[@id='basic']/div[2]/div[2]/div/div/div/div[2]/input")).sendKeys(101)
+        
+          await driver.findElement(By.xpath("//*[@id='basic']/button")).click()
+          await driver.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[2]/button[2]")).click()
+          
+       
+      },1500)
+    },3000)
+    
+    
+    },10000)
+
+    
+
+  } catch (error) {
+    console.error("Something went wrong!\n", error.stack, "\n");
+  }
+}
+
+// testList();
+
+// testProfileTab1();
+
+testProfileTab2()
