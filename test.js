@@ -1,30 +1,25 @@
+const webdriver = require("selenium-webdriver"),
+  By = webdriver.By,
+  Key = webdriver.Key;
+
+const driver = new webdriver.Builder().forBrowser("chrome").build();
+driver.manage().window().maximize();
 
 
-var ExcelToJSON = function() {
+(async function example() {
 
-  this.parseExcel = function(file) {
-    var reader = new FileReader();
 
-    reader.onload = function(e) {
-      var data = e.target.result;
-      var workbook = XLSX.read(data, {
-        type: 'binary'
-      });
+  try {
+    // Navigate to Url
+    await driver.get('https://www.google.com');
 
-      workbook.SheetNames.forEach(function(sheetName) {
-        // Here is your object
-        var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-        var json_object = JSON.stringify(XL_row_object);
-        console.log(json_object);
+    // Enter text "webdriver" and perform keyboard action "Enter"
+    await driver.findElement(By.name('q')).sendKeys('webdriver', Key.ENTER);
 
-      })
-
-    };
-
-    reader.onerror = function(ex) {
-      console.log(ex);
-    };
-
-    reader.readAsBinaryString(file);
-  };
-};
+    // Perform action ctrl + A (modifier CONTROL + Alphabet A) to select the page
+    // await driver.actions().keyDown(Key.CONTROL).sendKeys('a').perform();
+  }
+  finally {
+    // await driver.quit();
+  }
+})();
