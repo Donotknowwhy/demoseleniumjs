@@ -2,6 +2,10 @@ const webdriver = require("selenium-webdriver"),
   By = webdriver.By,
   Key = webdriver.Key;
 
+const {until} = require("selenium-webdriver")
+
+
+
 const driver = new webdriver.Builder().forBrowser("chrome").build();
 driver.manage().window().maximize();
 
@@ -12,27 +16,14 @@ async function testLogin() {
   try {
     driver.get(url + "login");
 
-    // const arr = [
-    //   {
-    //     email: 'aaaa',
-    //     pass: 'aaaa'
-    //   },
-    //   {
-    //     email: 'aaaa',
-    //     pass: 'aaaa'
-    //   },
-    //   {
-    //     email: 'aaaa',
-    //     pass: 'aaaa'
-    //   }
-    // ]
-
     driver
       .findElement(By.id("normal_login_email"))
-      .sendKeys("abc888@gmail.com");
+      .sendKeys("abc@gmail.com");
     driver.findElement(By.id("normal_login_password")).sendKeys("abc888");
 
     driver.findElement(By.className("login-form-button")).click();
+
+    
   } catch (err) {
     console.error("Something went wrong!\n", err.stack, "\n");
   }
@@ -40,9 +31,10 @@ async function testLogin() {
 
 async function checkAlert() {
   try {
-    await driver.get(url + "login");
+    await testLogin()
 
-    // Wait for the alert to be displayed
+    setTimeout( async() =>{
+      // Wait for the alert to be displayed
     await driver.wait(until.alertIsPresent());
 
     // Store the alert in a variable
@@ -53,6 +45,7 @@ async function checkAlert() {
 
     //Press the OK button
     await alert.accept();
+    },5000)
   } catch (err) {
     console.error("Something went wrong!\n", err.stack, "\n");
   }
@@ -115,43 +108,55 @@ async function testProfileTab1() {
               )
             )
             .sendKeys(inputValue, 1124);
-          await driver.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[2]/button[2]")).click();
-          
+          await driver
+            .findElement(
+              By.xpath(
+                "/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[2]/button[2]"
+              )
+            )
+            .click();
         }, 3000);
       }, 5000);
     }, 10000);
-    
   } catch (err) {
     console.error("Something went wrong!\n", err.stack, "\n");
   }
 }
 
-async function testProfileTab2(){
+async function testProfileTab2() {
   try {
-
     await testLogin();
-    setTimeout( async() =>{
+    setTimeout(async () => {
       await driver.get(url + "profile");
 
-    await driver.findElement(By.xpath("//*[@id='rc-tabs-0-tab-2']")).click()
+      await driver.findElement(By.xpath("//*[@id='rc-tabs-0-tab-2']")).click();
 
-    setTimeout( async() =>{
-      await driver.findElement(By.xpath("//*[@id='basic']/div[1]/div[2]/div/div/div/div[2]/input")).sendKeys(1235)
-      setTimeout( async() =>{
-        await driver.findElement(By.xpath("//*[@id='basic']/div[2]/div[2]/div/div/div/div[2]/input")).sendKeys(101)
-        
-          await driver.findElement(By.xpath("//*[@id='basic']/button")).click()
-          await driver.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[2]/button[2]")).click()
-          
-       
-      },1500)
-    },3000)
-    
-    
-    },10000)
+      setTimeout(async () => {
+        await driver
+          .findElement(
+            By.xpath("//*[@id='basic']/div[1]/div[2]/div/div/div/div[2]/input")
+          )
+          .sendKeys(1235);
+        setTimeout(async () => {
+          await driver
+            .findElement(
+              By.xpath(
+                "//*[@id='basic']/div[2]/div[2]/div/div/div/div[2]/input"
+              )
+            )
+            .sendKeys(101);
 
-    
-
+          await driver.findElement(By.xpath("//*[@id='basic']/button")).click();
+          await driver
+            .findElement(
+              By.xpath(
+                "/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[2]/button[2]"
+              )
+            )
+            .click();
+        }, 1500);
+      }, 3000);
+    }, 10000);
   } catch (error) {
     console.error("Something went wrong!\n", error.stack, "\n");
   }
@@ -161,4 +166,32 @@ async function testProfileTab2(){
 
 // testProfileTab1();
 
-testProfileTab2()
+// testProfileTab2()
+
+// async function testLogout() {
+//   try {
+//     await testLogin();
+
+//     setTimeout(async () => {
+//       await driver
+//         .findElement(
+//           By.xpath(
+//             "//*[@id='__next']/div/div[1]/section/header/div[2]/div[1]/ul/span"
+//           )
+//         )
+//         .click();
+//       setTimeout(async () => {
+//         await driver
+//           .findElement(By.xpath("/html/body/div[2]/div/div/ul/li[3]/button"))
+//           .click();
+//       }, 2000);
+//     }, 7000);
+//   } catch (err) {
+//     console.error("Something went wrong!\n", err.stack, "\n");
+//   }
+// }
+
+// testLogout();
+
+checkAlert()
+// testLogin()
