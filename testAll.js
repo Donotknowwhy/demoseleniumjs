@@ -227,9 +227,6 @@ async function testAll() {
       await testProfileTab1();
       setTimeout(async () => {
         await testProfileTab2();
-        setTimeout(async () => {
-          await testLogout();
-        }, 17000);
       }, 15000);
     }, 12000);
   }, 8500);
