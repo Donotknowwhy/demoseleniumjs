@@ -18,22 +18,66 @@ async function testLogin() {
 
     driver
       .findElement(By.id("normal_login_email"))
-      .sendKeys("abc@gmail.com");
-    driver.findElement(By.id("normal_login_password")).sendKeys("abc888");
+      .sendKeys("");
+    driver.findElement(By.id("normal_login_password")).sendKeys("");
 
     driver.findElement(By.className("login-form-button")).click();
 
+    
+    
+    setTimeout( async() =>{
+      const a = await driver.findElement(By.className("ant-form-item-explain-error")).getText();
+      if( typeof(a) === "string"){
+        testLogin1()
+      }
+      console.log(a)
+    },4000)
+    
+
+  } catch (err) {
+    console.error("Something went wrong!\n", err.stack, "\n");
+  }
+}
+
+async function testLogin1() {
+  try {
+    driver.get(url + "login");
+
+    driver
+      .findElement(By.id("normal_login_email"))
+      .sendKeys("abc88@gmail.com");
+    driver.findElement(By.id("normal_login_password")).sendKeys("abc888");
+
+    driver.findElement(By.className("login-form-button")).click();
+    
+  } catch (err) {
+    console.error("Something went wrong!\n", err.stack, "\n");
+  }
+}
+async function testLogin2() {
+  try {
+    driver.get(url + "login");
+
+    driver
+      .findElement(By.id("normal_login_email"))
+      .sendKeys("abc888@gmail.com");
+    driver.findElement(By.id("normal_login_password")).sendKeys("abc888");
+
+
+
+    driver.findElement(By.className("login-form-button")).click();
     
   } catch (err) {
     console.error("Something went wrong!\n", err.stack, "\n");
   }
 }
 
+
+
 async function checkAlert() {
   try {
+   
     await testLogin()
-
-    setTimeout( async() =>{
       // Wait for the alert to be displayed
     await driver.wait(until.alertIsPresent());
 
@@ -44,12 +88,24 @@ async function checkAlert() {
     let alertText = await alert.getText();
 
     //Press the OK button
-    await alert.accept();
-    },5000)
+    setTimeout(async() =>{
+      await alert.accept();
+    },2000)
+
+
+    setTimeout(async() =>{
+      if(typeof(alertText) === "string"){
+        await testLogin2()
+      }
+    },2500)
+
+
   } catch (err) {
     console.error("Something went wrong!\n", err.stack, "\n");
   }
 }
+
+
 
 async function testList() {
   try {
@@ -94,30 +150,34 @@ async function testProfileTab1() {
           )
           .click();
         setTimeout(async () => {
-          const inputValue = await driver
-            .findElement(
+        
+          driver.findElement(
               By.xpath(
                 "/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[1]/div/div/div/div/div/div/div/div[2]/input"
               )
             )
-            .getText();
-          await driver
-            .findElement(
+        
+
+            const randomValue = Math.floor(Math.random() * 100); 
+            // await driver.executeScript("document.getElementsByClassName('ant-input-number-input').value=6700")
+            await driver.findElement(
               By.xpath(
                 "/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[1]/div/div/div/div/div/div/div/div[2]/input"
-              )
-            )
-            .sendKeys(inputValue, 1124);
-          await driver
-            .findElement(
-              By.xpath(
-                "/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[2]/button[2]"
-              )
-            )
-            .click();
+              )).sendKeys(randomValue)
+
+                setTimeout( async() =>{
+                  
+                  await driver.findElement(
+                  By.xpath(
+                    "/html/body/div[3]/div/div[2]/div/div[2]/div/div/div[2]/button[2]"
+                  )
+                )
+                .click();
+                },2000)           
         }, 3000);
       }, 5000);
     }, 10000);
+    
   } catch (err) {
     console.error("Something went wrong!\n", err.stack, "\n");
   }
@@ -162,11 +222,7 @@ async function testProfileTab2() {
   }
 }
 
-// testList();
 
-// testProfileTab1();
-
-// testProfileTab2()
 
 // async function testLogout() {
 //   try {
@@ -194,4 +250,9 @@ async function testProfileTab2() {
 // testLogout();
 
 checkAlert()
-// testLogin()
+testLogin()
+// testList();
+
+// testProfileTab1();
+
+// testProfileTab2()

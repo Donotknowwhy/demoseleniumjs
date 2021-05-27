@@ -11,15 +11,15 @@ driver.manage().window().maximize();
 
   try {
     // Navigate to Url
-    await driver.get('https://www.google.com');
+    await driver.get('http://127.0.0.1:5500/index2.html');
 
     // Enter text "webdriver" and perform keyboard action "Enter"
-    await driver.findElement(By.name('q')).sendKeys('webdriver', Key.ENTER);
+    // await driver.findElement(By.id('test')).sendKeys(111);
+    await driver.executeScript("document.getElementById('test').value=555")
 
     // Perform action ctrl + A (modifier CONTROL + Alphabet A) to select the page
     // await driver.actions().keyDown(Key.CONTROL).sendKeys('a').perform();
   }
   finally {
-    await driver.quit();
   }
 })();
