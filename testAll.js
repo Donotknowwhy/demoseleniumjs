@@ -218,7 +218,8 @@ async function testLogout() {
 
 //run all test case
 async function testAll() {
-  await checkAlert();
+  // await checkAlert();
+  await testLogin2()
 
   setTimeout(async () => {
     await testList();
