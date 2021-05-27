@@ -17,19 +17,20 @@ https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner
 
 
 
-## Run file testAll.js to test all feature
+### Run file testAll.js to test all features
 ---
-## Run file testListPage.js to test all test case in /list page
+### Run file testListPage.js to test all test case in /list page
 ---
-## Run file testTab1ProfilePage.js to test all test case in tab 1 /list page
+### Run file testTab1ProfilePage.js to test all test case in tab 1 /list page
 ---
-## Run file testTab2ProfilePage.js to test all test case in tab 2 /list page
+### Run file testTab2ProfilePage.js to test all test case in tab 2 /list page
 ---
-## Run file testLoginPage.js to test all test call in login page
+### Run file testLoginPage.js to test all test call in login page
 ---
-## Run file testLogout.js to test logout feature
+### Run file testLogout.js to test logout feature
+---
 
-## Run file by:
+### Run file by:
 
 ```bash
 Ctrl + Alt + N
